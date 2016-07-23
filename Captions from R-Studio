@@ -1,0 +1,186 @@
+This is the R- Code For the project
+> date()
+[1] "Sat Jul 23 23:47:36 2016"
+> library(plyr)
+> library(ggplot2)
+> 
+> NEI <- readRDS("summarySCC_PM25.rds")
+> 
+> SCC <- readRDS("Source_Classification_Code.rds")
+> 
+> set.seed(12345)
+> 
+> NEI.reduced <- NEI[sample(nrow(NEI), 500), ]
+> 
+> plot1
+Error: object 'plot1' not found
+> library(plyr)
+> library(ggplot2)
+> 
+> NEI <- readRDS("summarySCC_PM25.rds")
+> 
+> aggregate.data <- with(NEI, aggregate(Emissions, by = list(year), sum))
+> 
+> plot(aggregate.data, type = "o", ylab = expression("Total Emissions, PM"[2.5]), 
++      xlab = "Year", main = "Total Emissions in the United States")
+> polygon(aggregate.data, col = "yellow", border = "green")
+> 
+> EI.24510 <- NEI[which(NEI$fips == "24510"), ]
+> aggregate.24510 <- with(NEI.24510, aggregate(Emissions, by = list(year), sum))
+Error in with(NEI.24510, aggregate(Emissions, by = list(year), sum)) : 
+  object 'NEI.24510' not found
+> library(plyr)
+> library(ggplot2)
+> 
+> NEI <- readRDS("summarySCC_PM25.rds")
+> 
+> SCC <- readRDS("Source_Classification_Code.rds")
+> 
+> NEI.24510 <- NEI[which(NEI$fips == "24510"), ]
+> aggregate.24510 <- with(NEI.24510, aggregate(Emissions, by = list(year), sum))
+> colnames(aggregate.24510) <- c("year", "Emissions")
+> plot(aggregate.24510, type = "o", ylab = expression("Total Emissions, PM"[2.5]), 
++      xlab = "Year", main = "Total Emissions for Baltimore County", xlim = c(1999, 
++                                                                             2008))
+> polygon(aggregate.data, border = "green")
+> 
+> polygon(aggregate.data, border = "red")
+> 
+> color = Pollutant_Type, geom = c("line")
+Error: unexpected ',' in "color = Pollutant_Type,"
+> library(plyr)
+> library(ggplot2)
+> 
+> NEI <- readRDS("summarySCC_PM25.rds")
+> 
+> SCC <- readRDS("Source_Classification_Code.rds")
+> 
+> NEI.24510 <- NEI[which(NEI$fips == "24510"), ]
+> aggregate.24510 <- with(NEI.24510, aggregate(Emissions, by = list(year), sum))
+> 
+> colnames(aggregate.24510) <- c("year", "Emissions")
+> 
+> NEI.24510.type <- ddply(NEI.24510, .(type, year), summarize, Emissions = sum(Emissions))
+> 
+> NEI.24510.type$Pollutant_Type <- NEI.24510.type$type
+> 
+> qplot(year, Emissions, data = NEI.24510.type, group = Pollutant_Type, color = Pollutant_Type, 
++       
++ geom = c("point", "line"), ylab = expression("Total Emissions, PM"[2.5]), 
++ xlab = "Year", main = "Total Emissions in U.S. by Type of Pollutant")
+> library(lattice)
+> library(plyr)
+> NEI <- readRDS("summarySCC_PM25.rds")
+> 
+> SCC <- readRDS("Source_Classification_Code.rds")
+> 
+> SCC.coal <- grep("coal", SCC$Short.Name, ignore.case = TRUE)
+> SCC.coal <- SCC[SCC.coal, ]
+> 
+> SCC.identifiers <- as.character(SCC.coal$SCC)
+> 
+> NEI$SCC <- as.character(NEI$SCC)
+> 
+> NEI.coal <- NEI[NEI$SCC %in% SCC.identifiers, ]
+> 
+> aggregate.coal <- with(NEI.coal, aggregate(Emissions, by = list(year), sum))
+> 
+> colnames(aggregate.coal) <- c("year", "Emissions")
+> 
+> plot(aggregate.coal, type = "o", ylab = expression("Total Emissions, PM"[2.5]), 
++      xlab = "Year", main = "Emissions and Total Coal Combustion for the United States", 
++      xlim = c(1999, 2008))
+> polygon(aggregate.coal, col = "yellow", border = "green")
+> 
+> library(ggplot2)
+> 
+> library(plyr)
+> NEI <- readRDS("summarySCC_PM25.rds")
+> SCC <- readRDS("Source_Classification_Code.rds")
+> 
+> SCC.motor <- grep("motor", SCC$Short.Name, ignore.case = TRUE)
+> 
+> SCC.motor <- SCC[SCC.motor, ]
+> 
+> SCC.identifiers <- as.character(SCC.motor$SCC)
+> 
+> NEI$SCC <- as.character(NEI$SCC)
+> 
+> NEI.motor <- NEI[NEI$SCC %in% SCC.identifiers, ]
+> 
+> NEI.motor.24510 <- NEI.motor[which(NEI.motor$fips == "24510"), ]
+> 
+> aggregate.motor.24510 <- with(NEI.motor.24510, aggregate(Emissions, by = list(year), 
++                                                          sum))
+> plot(aggregate.motor.24510, type = "o", ylab = expression("Total Emissions, PM"[2.5]), 
++      xlab = "Year", main = "Total Emissions from Motor Vehicle Sources")
+> 
+> library(plyr)
+> library(ggplot2)
+> 
+> NEI <- readRDS("summarySCC_PM25.rds")
+> SCC <- readRDS("Source_Classification_Code.rds")
+> SCC.motor <- grep("motor", SCC$Short.Name, ignore.case = TRUE)
+> SCC.motor <- SCC[SCC.motor, ]
+> 
+> SCC.identifiers <- as.character(SCC.motor$SCC)
+> 
+> NEI$SCC <- as.character(NEI$SCC)
+> 
+> NEI.motor <- NEI[NEI$SCC %in% SCC.identifiers, ]
+> 
+> NEI.motor.24510 <- NEI.motor[which(NEI.motor$fips == "24510"), ]
+> 
+> aggregate.motor.24510 <- with(NEI.motor.24510, aggregate(Emissions, by = list(year), 
++                                                          sum))
+> SCC.motor <- grep("motor", SCC$Short.Name, ignore.case = TRUE)
+> 
+> SCC.motor <- SCC[SCC.motor, ]
+> 
+> SCC.identifiers <- as.character(SCC.motor$SCC)
+> 
+> NEI$SCC <- as.character(NEI$SCC)
+> 
+> NEI.motor <- NEI[NEI$SCC %in% SCC.identifiers, ]
+> 
+> NEI.motor.24510 <- NEI.motor[which(NEI.motor$fips == "24510"), ]
+> 
+> aggregate.motor.24510 <- with(NEI.motor.24510, aggregate(Emissions, by = list(year), 
++                                                          sum))
+> SCC.motor <- grep("motor", SCC$Short.Name, ignore.case = TRUE)
+> SCC.motor <- SCC[SCC.motor, ]
+> 
+> SCC.identifiers <- as.character(SCC.motor$SCC)
+> 
+> NEI$SCC <- as.character(NEI$SCC)
+> 
+> NEI.motor <- NEI[NEI$SCC %in% SCC.identifiers, ]
+> 
+> NEI.motor.24510 <- NEI.motor[which(NEI.motor$fips == "24510"), ]
+> 
+> NEI.motor.06037 <- NEI.motor[which(NEI.motor$fips == "06037"), ]
+> 
+> aggregate.motor.24510 <- with(NEI.motor.24510, aggregate(Emissions, by = list(year), 
++                                                          sum))
+> ggregate.motor.24510$group <- rep("Baltimore County", length(aggregate.motor.24510[, 
++                                                                                    1]))
+Error in ggregate.motor.24510$group <- rep("Baltimore County", length(aggregate.motor.24510[,  : 
+  object 'ggregate.motor.24510' not found
+> aggregate.motor.24510$group <- rep("Baltimore County", length(aggregate.motor.24510[, 
++                                                                                     1]))
+> aggregate.motor.06037 <- with(NEI.motor.06037, aggregate(Emissions, by = list(year), 
++                                                          sum))
+> aggregate.motor.06037$group <- rep("Los Angeles County", length(aggregate.motor.06037[, 
++                                                                                       1]))
+> 
+> aggregate.motor.06037$group <- rep("Los Angeles County", length(aggregate.motor.06037[, 
++                                                                                       1]))
+> aggregated.motor.zips <- rbind(aggregate.motor.06037, aggregate.motor.24510)
+> aggregated.motor.zips$group <- as.factor(aggregated.motor.zips$group)
+> 
+> colnames(aggregated.motor.zips) <- c("Year", "Emissions", "Group")
+> 
+> qplot(Year, Emissions, data = aggregated.motor.zips, group = Group, color = Group, 
++       geom = c("point", "line"), ylab = expression("Total Emissions, PM"[2.5]), 
++       xlab = "Year", main = "Comparison of Total Emissions by County")
+> 
